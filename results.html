@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopkeeper Results</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background-color: #ffffff;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .card-title {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .btn-outline-primary {
+      border-radius: 30px;
+    }
+    .btn-outline-primary:hover {
+      background-color: #0d6efd;
+      color: #fff;
+    }
+    .map-container {
+      margin-top: 40px;
+      border: 2px solid #ccc;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      background-color: #f8f9fa;
+      color: #333;
+      margin-top: 60px;
+    }
+    h2 {
+      font-weight: 700;
+      color: #0d6efd;
+      margin-bottom: 30px;
+    }
+    .btn-secondary {
+      border-radius: 25px;
+    }
+    .top-shopkeeper {
+      border: 3px solid #0d6efd;
+      box-shadow: 0 0 15px rgba(13, 110, 253, 0.5);
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center">Top Shopkeepers</h2>
+  <div class="row">
+    {% for shop in results %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 {% if loop.index0 == 0 %}top-shopkeeper{% endif %}">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-store"></i> {{ shop['Shopkeeper_Name'] }}</h5>
+            <p class="card-text">
+              <strong><i class="fas fa-map-marker-alt"></i> Area:</strong> {{ shop['Area'] }}<br>
+              <strong><i class="fas fa-phone"></i> Mobile:</strong> 
+              <a href="tel:{{ shop['Mobile_Number'] }}" class="text-decoration-none text-dark">{{ shop['Mobile_Number'] }}</a><br>
+              <strong><i class="fas fa-coins"></i> Revenue:</strong> ₹{{ shop['Revenue'] }}<br>
+              <strong><i class="fas fa-bullseye"></i> Target:</strong> ₹{{ shop['Target'] }}<br>
+              <strong><i class="fas fa-chart-line"></i> Prediction:</strong> {{ shop['Prediction_Label'] }}
+            </p>
+            <a href="https://www.google.com/maps?q={{ shop['Latitude'] }},{{ shop['Longitude'] }}" target="_blank" class="btn btn-outline-primary w-100">View on Map</a>
+            <a href="tel:{{ shop['Mobile_Number'] }}" class="btn btn-success w-100 mt-2">
+              <i class="fas fa-phone-alt"></i> Call Shopkeeper
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="map-container mt-5">
+    {{ map_html|safe }}
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="/" class="btn btn-secondary">Search Again</a>
+  </div>
+</div>
+
+<div class="footer">
+  Developed by Team Dc
+</div>
+</body>
+</html>
